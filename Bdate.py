@@ -1,13 +1,15 @@
 import vk_api
 from prettytable import PrettyTable
 
-vk_session = vk_api.VkApi(login="ЛОГИН", password="ПАРОЛЬ")
+login = "Ваш Логин"
+password = "Ваш Пароль"
+table = PrettyTable(["Имя", "Фамилия", "Дата рождения"])
+table2 = PrettyTable(["Имя", "Фамилия"])
+
+vk_session = vk_api.VkApi(login=login, password=password)
 vk_session.auth()
 vk = vk_session.get_api()
 info = vk.friends.get(order="name", fields="bdate")
-
-table = PrettyTable(["Имя", "Фамилия", "Дата рождения"])
-table2 = PrettyTable(["Имя", "Фамилия"])
 
 for k in info["items"]:
     if ("bdate" in k):
@@ -15,7 +17,7 @@ for k in info["items"]:
     else:
         table2.add_row([k["first_name"], k["last_name"]])
 
-print("ДРУЗЬЯ, ДР КОТОРЫХ ИЗВЕСТНО:\n")
+print("Друзья, др которых известно:\n")
 print(table)
-print("\n\nДРУЗЬЯ, ДР КОТОРЫХ НЕИЗВЕСТНО\n")
+print("\n\nДрузья, др которых неизвестно\n")
 print(table2)
